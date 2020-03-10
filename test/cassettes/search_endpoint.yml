@@ -1,0 +1,51 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://us1.locationiq.com/v1/search.php?format=json&key=<LOCATIONIQ_TOKEN>&q=Gardens%20Of%20Babylon
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 10 Mar 2020 19:17:51 GMT
+      Content-Type:
+      - application/json; charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - __cfduid=d8f2e2c45185a2884400f42f9cfcdc23a1583867871; expires=Thu, 09-Apr-20
+        19:17:51 GMT; path=/; domain=.locationiq.com; HttpOnly; SameSite=Lax
+      X-Powered-By:
+      - LocationIQ
+      Access-Control-Allow-Origin:
+      - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Expect-Ct:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 571f60d3af6ef55d-SEA
+    body:
+      encoding: ASCII-8BIT
+      string: '[{"place_id":"73233419","licence":"https:\/\/locationiq.com\/attribution","osm_type":"node","osm_id":"6238105437","boundingbox":["50.8240715","50.8241715","-0.1506662","-0.1505662"],"lat":"50.8241215","lon":"-0.1506162","display_name":"Garden
+        Of Babylon, 58-58a, Preston Street, North Laine Retail Area, Brighton, Brighton
+        and Hove, South East, England, BN1 2HE, United Kingdom","class":"amenity","type":"restaurant","importance":0.201,"icon":"https:\/\/locationiq.org\/static\/images\/mapicons\/food_restaurant.p.20.png"}]'
+    http_version: null
+  recorded_at: Tue, 10 Mar 2020 19:17:51 GMT
+recorded_with: VCR 5.1.0
