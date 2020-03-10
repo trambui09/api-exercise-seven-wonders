@@ -5,8 +5,21 @@ require "pry"
 #Starter Code:
 seven_wonders = ["Great Pyramid of Giza", "Gardens of Babylon", "Colossus of Rhodes", "Pharos of Alexandria", "Statue of Zeus at Olympia", "Temple of Artemis", "Mausoleum at Halicarnassus"]
 
-BASE_URL = "https://us1.locationiq.com/v1/search.php"
-KEY = "da6565bd8527c5"
+BASE_URL            = "https://us1.locationiq.com/v1/search.php"
+KEY                 = "da6565bd8527c5"
+REVERSE_LOOKUP_BASE = "https://us1.locationiq.com/v1/reverse.php"
+DRIVING_BASE_URL    = "https://us1.locationiq.com/v1/directions/driving/"
+
+
+def reverse_lookup_location(lat, lon)
+  response = HTTParty.get("#{REVERSE_LOOKUP_BASE}?key=#{KEY}&lat=#{lat}&lon=#{lon}&format=json")
+
+  return JSON.parse(response.body)["display_name"]
+end
+
+def get_driving_directions(start, end_point)
+  return HTTParty.get("#{DRIVING_BASE_URL}#{start[:lon]},#{start[:lat]};#{end_point[:lon]},#{end_point[:lat]}?key=#{KEY}")
+end
 
 def find_location(location) 
   response = HTTParty.get("#{BASE_URL}?key=#{KEY}&q=#{location}&format=json")
@@ -38,24 +51,16 @@ ap "********"
 
 ap "Driving Directions from Cairo to The great pyramid"
 
-DRIVING_BASE_URL = "https://us1.locationiq.com/v1/directions/driving/"
 pyramid = {lon: 31.243666, lat: 30.048819}
 cairo = {lon: 27.4241280469557, lat: 37.03785995}
 
 sleep(1)
-response = HTTParty.get("#{DRIVING_BASE_URL}#{pyramid[:lon]},#{pyramid[:lat]};#{cairo[:lon]},#{cairo[:lat]}?key=#{KEY}")
 
-ap JSON.parse(response.body)
+driving_directions_json = get_driving_directions(pyramid, cairo)
+
+ap JSON.parse(driving_directions_json.body)
 
 locations = [{ lat: 38.8976998, lon: -77.0365534886228}, {lat: 48.4283182, lon: -123.3649533 }, { lat: 41.8902614, lon: 12.493087103595503}]
-
-REVERSE_LOOKUP_BASE = "https://us1.locationiq.com/v1/reverse.php"
-
-def reverse_lookup_location(lat, lon)
-  response = HTTParty.get("#{REVERSE_LOOKUP_BASE}?key=#{KEY}&lat=#{lat}&lon=#{lon}&format=json")
-
-  return JSON.parse(response.body)["display_name"]
-end
 
 ap "Reverse look up locations"
 locations.each do |location|
