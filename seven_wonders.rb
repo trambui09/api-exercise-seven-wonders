@@ -1,21 +1,38 @@
 require 'httparty'
 require 'awesome_print'
+require "pry"
 
 #Starter Code:
 seven_wonders = ["Great Pyramid of Giza", "Gardens of Babylon", "Colossus of Rhodes", "Pharos of Alexandria", "Statue of Zeus at Olympia", "Temple of Artemis", "Mausoleum at Halicarnassus"]
 
 BASE_URL = "https://us1.locationiq.com/v1/search.php"
-key = "da6565bd8527c5"
+KEY = "da6565bd8527c5"
 
-seven_wonders_locations = seven_wonders.map do |wonder|
-  # Code to discover the locations of each wonder.
-  response = HTTParty.get("#{BASE_URL}?key=#{key}&q=#{wonder}&format=json")
+def find_location(location) 
+  response = HTTParty.get("#{BASE_URL}?key=#{KEY}&q=#{location}&format=json")
+   
+  raise ArgumentError, "Cannot find location" unless response.code == 200
+
   response_data = JSON.parse(response.body)
-  sleep(1)
-  {lat: response_data.first["lat"], lon: response_data.first["lon"], name: wonder}
+
+  return { lat: response_data.first["lat"], 
+    lon: response_data.first["lon"], 
+    name: location
+  }
 end
 
-ap seven_wonders_locations
+def get_seven_wonders_locations
+  seven_wonders = ["Great Pyramid of Giza", "Gardens of Babylon", "Colossus of Rhodes", "Pharos of Alexandria", "Statue of Zeus at Olympia", "Temple of Artemis", "Mausoleum at Halicarnassus"]
+
+  seven_wonders_locations = seven_wonders.map do |wonder|
+    # Code to discover the locations of each wonder.
+    sleep(0.5)
+    find_location(wonder)
+  end
+  return seven_wonders_locations
+end
+
+ap get_seven_wonders_locations
 
 ap "********"
 
@@ -25,7 +42,8 @@ DRIVING_BASE_URL = "https://us1.locationiq.com/v1/directions/driving/"
 pyramid = {lon: 31.243666, lat: 30.048819}
 cairo = {lon: 27.4241280469557, lat: 37.03785995}
 
-response = HTTParty.get("#{DRIVING_BASE_URL}#{pyramid[:lon]},#{pyramid[:lat]};#{cairo[:lon]},#{cairo[:lat]}?key=#{key}")
+sleep(1)
+response = HTTParty.get("#{DRIVING_BASE_URL}#{pyramid[:lon]},#{pyramid[:lat]};#{cairo[:lon]},#{cairo[:lat]}?key=#{KEY}")
 
 ap JSON.parse(response.body)
 
@@ -33,11 +51,16 @@ locations = [{ lat: 38.8976998, lon: -77.0365534886228}, {lat: 48.4283182, lon: 
 
 REVERSE_LOOKUP_BASE = "https://us1.locationiq.com/v1/reverse.php"
 
+def reverse_lookup_location(lat, lon)
+  response = HTTParty.get("#{REVERSE_LOOKUP_BASE}?key=#{KEY}&lat=#{lat}&lon=#{lon}&format=json")
+
+  return JSON.parse(response.body)["display_name"]
+end
+
 ap "Reverse look up locations"
 locations.each do |location|
-  response = HTTParty.get("#{REVERSE_LOOKUP_BASE}?key=#{key}&lat=#{location[:lat]}&lon=#{location[:lon]}&format=json")
-  ap JSON.parse(response.body)["display_name"]
   sleep(1)
+  ap reverse_lookup_location(location[:lat], location[:lon])
 end
 
 
