@@ -2,7 +2,7 @@ require 'httparty'
 require 'awesome_print'
 
 #Starter Code:
-seven_wonders = ["Great Pyramid of Giza", "Hanging Gardens of Babylon", "Colossus of Rhodes", "Pharos of Alexandria", "Statue of Zeus at Olympia", "Temple of Artemis", "Mausoleum at Halicarnassus"]
+seven_wonders = ["Great Pyramid of Giza", "Gardens of Babylon", "Colossus of Rhodes", "Pharos of Alexandria", "Statue of Zeus at Olympia", "Temple of Artemis", "Mausoleum at Halicarnassus"]
 
 BASE_URL = "https://us1.locationiq.com/v1/search.php"
 key = "da6565bd8527c5"
