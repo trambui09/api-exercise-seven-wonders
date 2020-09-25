@@ -24,14 +24,14 @@ Open up `seven_wonders.rb` in this repo. What do you see? Answer the following q
 1. What are the constant variables in this file? What are their values?
 1. What are the two methods defined?
 1. What is the `find_seven_wonders` method returning?
-1. Look this up with a neighbor:
+2. Look this up:
     - What is API rate limiting?
     - What does Ruby's built-in method `sleep` do?
-1. Inside of the `find_seven_wonders` method, what happens inside of the `each` loop?
+3. Inside of the `find_seven_wonders` method, what happens inside of the `each` loop?
 
 ### Sign up for Location IQ
 
-To get access to Location IQ's API, we need to sign up for a Location IQ key.
+To get access to [Location IQ's](https://my.locationiq.com) API, we need to sign up for a Location IQ key.
 
 Go to their website and create a free account.
 
