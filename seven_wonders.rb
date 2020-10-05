@@ -1,10 +1,24 @@
 require 'httparty'
 require "awesome_print"
 
-BASE_URL = "THE BASE URL FOR THE API REQUEST"
-LOCATION_IQ_KEY = "YOUR API TOKEN"
+BASE_URL = "https://us1.locationiq.com/v1/search.php?"
+LOCATION_IQ_KEY = "b2f441ce4caa9b"
 
+# takes in a seven wonder string
+# returns a nested hash with lat and long hashes insides
 def get_location(search_term)
+
+  search_term_string = "#{search_term.gsub(/[\s]/, '%20')}"
+
+  # couldn't get the query to work properly
+  query = {
+      key: LOCATION_IQ_KEY,
+      q: search_term_string
+  }
+  url = "#{BASE_URL}key=#{LOCATION_IQ_KEY}&q=#{search_term_string}&format=json"
+
+  response = HTTParty.get(url)
+  return {search_term => {:lat => response[0]["lat"], :lon => response[0]["lon"]}}
 
 end
 
